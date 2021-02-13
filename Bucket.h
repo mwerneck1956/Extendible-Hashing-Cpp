@@ -1,7 +1,8 @@
 #ifndef BUCKET_H_INCLUDED
 #define BUCKET_H_INCLUDED
 #include<iostream>
-#include<list>
+#include<map>
+#include<string>
 
 using namespace std;
 
@@ -11,15 +12,18 @@ class Bucket
         int local_depth;
         int maxSize;
         int usedSize;
-        list<string> hashedValues;
+        map<string,int> hashedValues;
 
   public:
        Bucket(int maxSize);
        ~Bucket();
-       bool Insert(string hashedValue);
+       bool Insert(string hashedValue , int value);
        void Remove(string Value);
-       void GetLocalDepth();
+       int GetDepth(int significantBits);
        void GetUsedSize();
+       int getElement(string key);
+       int Search(string hashedKey);
+       //@Todo fazer remoção
 
 };
 
