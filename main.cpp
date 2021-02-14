@@ -6,9 +6,13 @@
 
 using namespace std;
 
+
+
 int main()
 {
     int number_of_bits, bucket_size;
+    vector<string>teste;
+
     cout << "Digite o tamanho  máximo de bits e tamanho do balde" << endl;
     cin >> number_of_bits >> bucket_size;
     Directory *directory = new Directory(number_of_bits, bucket_size);
@@ -31,6 +35,5 @@ int main()
     else
         cout << "Valor n achado" << endl;
     */
-   directory->DuplicateDirectory();
    directory->PrintInfo();
 }
