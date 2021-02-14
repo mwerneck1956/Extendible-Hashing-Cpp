@@ -1,6 +1,7 @@
-#include"./Directory.h"
+#include "./Directory.h"
 
-Directory::Directory(int number_of_bits,int bucket_max_size){
+Directory::Directory(int number_of_bits, int bucket_max_size)
+{
     this->number_of_bits = number_of_bits;
     this->bucket_max_size = bucket_max_size;
 
@@ -8,25 +9,25 @@ Directory::Directory(int number_of_bits,int bucket_max_size){
     this->global_depth = 2;
 
     //Adiciono o primeiro balde
-    Bucket* firstBucket = new Bucket(bucket_max_size);
+    Bucket *firstBucket = new Bucket(bucket_max_size);
 
     //Faz todas posições do meu balde apontarem para o mesmo Bucket
-    for (int i = 0; i < pow(2,this->global_depth); i++)
+    for (int i = 0; i < pow(2, this->global_depth); i++)
     {
         this->buckets.push_back(firstBucket);
     }
 }
 //Transforma um valor inteiro em binário(bitwize)
-string Directory::hash(long long int value){
-    string hashedValue; 
-    for (int i = this->number_of_bits ; i >= 0; i--)
+string Directory::hash(long long int value)
+{
+    string hashedValue;
+    for (int i = this->number_of_bits - 1; i >= 0; i--)
     {
         long long int k = value >> i;
         if (k & 1)
-            hashedValue.push_back('1'); 
+            hashedValue.push_back('1');
         else
-            hashedValue.push_back('0'); 
-
+            hashedValue.push_back('0');
     }
     return hashedValue;
 }
@@ -44,25 +45,54 @@ long int Directory::binary_to_decimal(long int n)
     return decimal;
 }
 
-void Directory::Insert(long long int value){
+void Directory::Insert(long long int value)
+{
     string hashedValue = this->hash(value);
     //Pego as posições significativas da chave que serão relativas ao global_depth
-    string significantBits = hashedValue.substr(0,this->global_depth);
+    string significantBits = hashedValue.substr(0, this->global_depth);
     //Pego os bits mais significativos para achar em que posição do meu diretório o valor vai ficar
-    int valueIndex = this->binary_to_decimal(stoi(significantBits)); 
-    //Inserção do valor no respectivo indice do diretório
-    this->buckets[valueIndex]->Insert(hashedValue , this->global_depth);
+    int valueIndex = this->binary_to_decimal(stoi(significantBits));
+    if (!this->buckets[valueIndex]->IsFull())
+    {
+        this->buckets[valueIndex]->Insert(hashedValue, this->global_depth);
+    }
+    else if (this->buckets[valueIndex]->IsFull() && this->global_depth > this->buckets[valueIndex]->GetLocalDepth())
+    {
+        Bucket *newBucket = new Bucket(this->bucket_max_size);
 
+        //Insiro o novo valor no novo balde
+        newBucket->Insert(hashedValue, global_depth);
+
+        for (int i = 0; i < this->buckets[valueIndex]->GetSize(); i++)
+        {
+            //Se o valor que estou passando tiver os bits significativos igual do valor a ser inserido
+            //vou remover ele do balde original e guardar no meu novo balde
+            if (this->buckets[valueIndex]->GetElement(i).substr(0, this->global_depth) == significantBits)
+            {
+                newBucket->Insert(this->buckets[valueIndex]->GetElement(i), this->global_depth);
+                //Removo valor inserido no novo balde do balde antigo.
+                this->buckets[valueIndex]->Remove(i, this->global_depth);
+            }
+        }
+
+        this->buckets[valueIndex] = newBucket;
+    }
 }
 
-void Directory::PrintInfo(){
-    for(int i = 0 ; i < this->buckets.size() ; i++){
-        cout << "Diretório : " << i  << endl;
-        cout << "Valores : ";
-        int bucketSize = this->buckets[i]->GetSize();
-        for(int j  = 0 ; j < bucketSize; j++){
-            cout << this->buckets[i]->GetElement(j) + " ,"; 
+void Directory::PrintInfo()
+{
+    for (int i = 0; i < this->buckets.size(); i++)
+    {
+        if (this->buckets[i])
+        {
+            cout << "Diretório : " << i << endl;
+            cout << "Valores : ";
+            int bucketSize = this->buckets[i]->GetSize();
+            for (int j = 0; j < bucketSize; j++)
+            {
+                cout << this->buckets[i]->GetElement(j) + " ,";
+            }
+            cout << endl;
         }
-        cout << endl;
     }
 }

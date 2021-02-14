@@ -25,10 +25,13 @@ class Bucket
        int GetLocalDepth();
        void SetLocalDepth(int new_local_depth);
        bool Insert(string hashedValue , int global_depth);
-       void VerifyLocalDepth(string value , int global_depth);
-       void Remove(string Value);
+       void RecalculateLocalDepth(string value , int global_depth);
+       int Find(string value);
        int Search(string hashedKey);
        void ClearBucket();
+       void Remove(string Value, int global_depth);
+       void Remove(int pos , int global_depth);
+       bool IsFull();
 
        //@Todo fazer remoção
 
