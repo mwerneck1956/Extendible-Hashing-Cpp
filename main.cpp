@@ -31,6 +31,6 @@ int main()
     else
         cout << "Valor n achado" << endl;
     */
-   //directory->DuplicateDirectory();
+   directory->DuplicateDirectory();
    directory->PrintInfo();
 }

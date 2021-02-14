@@ -134,20 +134,35 @@ bool Directory::Find(long long int value)
 }
 
 void Directory::DuplicateDirectory(){
+
+    //Faço uma cópia do meu vetor de buckets
+    vector<Bucket*> bucketsCopy = this->buckets;
+
     for(int i = pow(2,this->global_depth) ; i < pow(2,this->global_depth + 1); i++){
         this->buckets.push_back(NULL);
     }
+
     this->global_depth++;
-    Bucket* auxBucket;
-    //Reorganizo os ponteiros
-    for(int i = 0 ; i <= pow(2,this->global_depth)/2 ; i++){
-        auxBucket = this->buckets[i+1];
-        this->buckets[i+1] = this->buckets[i];
-        this->buckets[i+2] = auxBucket;
-    }
-    //Faço o ultimo apontar para o balde do  ante penultimo
+    int j =0;
+
+
+    //Reorganização dos ponteiros
     
-    this->buckets[pow(2,this->global_depth)] = this->buckets[pow(2,this->global_depth -1)];
+    //Itero todo meu vetor de baldes e, rearranjo os ponteiros relacionando
+    //os ponteiros do diretório duplicado com o diretório original
+    //exemplo, v[0] e v[1] irão receber [0] do copiado
+    //exemplo, v[2] e v[3] irão receber [1] do copiado
+    //exemplo, v[4] e v[5] irão receber [2] do copiado
+    //exemplo, v[6] e v[7] irão receber [3] do copiado
+    for(int i = 0 ; i <= pow(2,this->global_depth) ; i+=2){
+        this->buckets[i] = bucketsCopy[j];
+        this->buckets[i+1] = bucketsCopy[j];
+        j++;
+    }
+
+    //Deleto meu vetor auxiliar dos baldes copiados
+    bucketsCopy.~vector();
+    
 }
 
 void Directory::PrintInfo()
