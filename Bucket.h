@@ -12,7 +12,7 @@ class Bucket
         int local_depth;
         int maxSize;
         int usedSize;
-        vector<string> hashedValue;
+        vector<string> hashedValues;
 
   public:
        Bucket(int maxSize);

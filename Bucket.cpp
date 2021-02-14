@@ -9,7 +9,7 @@ Bucket::Bucket(int maxSize){
 }
 
 string Bucket::GetElement(int pos){
-    return this->hashedValue[pos];
+    return this->hashedValues[pos];
 }
 
 int Bucket::GetSize(){
@@ -50,7 +50,7 @@ void Bucket::VerifyLocalDepth(string value , int global_depth){
  
     //Iterar nos elementos do meu balde, e pega os n bits significativos de todos
     for(int i = 0 ; i < this->GetUsedSize() ; i++){
-        if(significant_bits == this->hashedValue[i].substr(0,global_depth))
+        if(significant_bits == this->hashedValues[i].substr(0,global_depth))
             valueOcorrence++;
     }
 
@@ -65,7 +65,7 @@ void Bucket::VerifyLocalDepth(string value , int global_depth){
 bool Bucket::Insert(string hashedValue , int global_depth){
     //Verifico se é possivel inserir o valor no balde
     if(this->usedSize < this->maxSize){
-        this->hashedValue.push_back(hashedValue);
+        this->hashedValues.push_back(hashedValue);
         //Vai verificar se a profundidade precisa ser alterada
         this->VerifyLocalDepth(hashedValue,global_depth);
         this->usedSize++;
@@ -79,6 +79,10 @@ bool Bucket::Insert(string hashedValue , int global_depth){
     return false;
 }
 
+void Bucket::ClearBucket(){
+    this->hashedValues.clear();
+    this->SetLocalDepth(0);
+}
 
 void Bucket::Remove(string value){
     //Busco o indíce do proucurado
@@ -88,5 +92,5 @@ void Bucket::Remove(string value){
 }
 
 Bucket::~Bucket(){
-    this->hashedValue.~vector();
+    this->hashedValues.~vector();
 }
