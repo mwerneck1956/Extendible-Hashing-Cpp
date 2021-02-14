@@ -1,6 +1,7 @@
 #include <iostream>
 #include <list>
 #include <vector>
+#include <string>
 #include "./Directory.h"
 
 using namespace std;
@@ -14,13 +15,15 @@ int main()
     int value;
     cout << "Digite o valor a ser inserido no diretório" << endl;
     cin >> value;
+   // cout << "decimal " << directory->binary_to_decimal(stoi("01"));
+    
     while (value != 0)
     {
         directory->Insert(value);
         cout << "Digite o valor a ser inserido no diretório" << endl;
         cin >> value;
     }
+    
 
-    directory->PrintInfo();
-
+     directory->PrintInfo();
 }

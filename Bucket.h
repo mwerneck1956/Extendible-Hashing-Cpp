@@ -32,6 +32,7 @@ class Bucket
        void Remove(string Value, int global_depth);
        void Remove(int pos , int global_depth);
        bool IsFull();
+       void PrintBucket();
 
        //@Todo fazer remoção
 

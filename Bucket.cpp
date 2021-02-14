@@ -82,6 +82,15 @@ bool Bucket::Insert(string hashedValue, int global_depth)
     return false;
 }
 
+void Bucket::PrintBucket(){
+    cout << "Balde " << endl;
+    cout << "Valores : ";
+    for(string value : this->hashedValues){
+        cout << value +",";  
+    }
+    cout << endl;
+}
+
 void Bucket::ClearBucket()
 {
     this->hashedValues.clear();
@@ -106,6 +115,7 @@ int Bucket::Find(string value)
     //Se não achar o valor retorrna -1
     return -1;
 }
+
 
 void Bucket::Remove(string value, int global_depth)
 {

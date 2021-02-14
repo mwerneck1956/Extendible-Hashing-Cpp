@@ -20,7 +20,7 @@ private:
 public:
     Directory(int depth, int bucket_size);
     ~Directory();
-    string hash(long long int n);
+    string hash(long long int n , int number_of_bits);
     void Insert(long long int value);
     long int binary_to_decimal(long int n);
     void PrintInfo();
