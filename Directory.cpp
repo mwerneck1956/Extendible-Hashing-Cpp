@@ -53,6 +53,7 @@ void Directory::Insert(long long int value)
     string significantBits = hashedValue.substr(0, this->global_depth);
     //Pego os bits mais significativos para achar em que posição do meu diretório o valor vai ficar
     int valueIndex = this->binary_to_decimal(stoi(significantBits));
+
     if (!this->buckets[valueIndex]->IsFull())
     {
         this->buckets[valueIndex]->Insert(hashedValue, this->global_depth);
@@ -64,7 +65,6 @@ void Directory::Insert(long long int value)
         //Insiro o novo valor no novo balde´
         newBucket->Insert(hashedValue, global_depth);
 
-        cout << "Size do balde : " << this->buckets[valueIndex]->GetSize() << endl;
         this->buckets[valueIndex]->PrintBucket();
 
         //Guarda os valores que vão ser inseridos no novo balde, e depois vão ter que
@@ -81,16 +81,35 @@ void Directory::Insert(long long int value)
                 newBucket->Insert(this->buckets[valueIndex]->GetElement(i), this->global_depth);
                 //Adiciono no meu vetor de inseridos ´para remover o valor do meu balde antigo
                 insertedValues.push_back(this->buckets[valueIndex]->GetElement(i));
-                //Removo valor inserido no novo balde do balde antigo.
-                //this->buckets[valueIndex]->Remove(i, this->global_depth);
             }
         }
+
+        cout << "Valores inseridos : ";
+        for(int i = 0 ; i < insertedValues.size() ;i++)
+        cout << insertedValues.at(i) << " ";
+        cout << endl;
+
+
+        cout << "Balde antigo antes remocao" << endl;
+        this->buckets[valueIndex]->PrintBucket();
+        cout << endl;
+
 
         //Removo valores inseridos no balde novo do meu balde antigo
         for(string value : insertedValues)
             this->buckets[valueIndex]->Remove(value,this->global_depth);
 
+        cout << "Balde antigo " << endl;
+        this->buckets[valueIndex]->PrintBucket();
+        cout << endl;
+
+        cout << "Balde novo " << endl;
+        newBucket->PrintBucket();
+        cout << endl;
+
         this->buckets[valueIndex] = newBucket;
+
+        
     }
 }
 
@@ -112,6 +131,23 @@ bool Directory::Find(long long int value)
 
     //Se o indice for invalido ou o valor não existir no balde retorno falso
     return false;
+}
+
+void Directory::DuplicateDirectory(){
+    for(int i = pow(2,this->global_depth) ; i < pow(2,this->global_depth + 1); i++){
+        this->buckets.push_back(NULL);
+    }
+    this->global_depth++;
+    Bucket* auxBucket;
+    //Reorganizo os ponteiros
+    for(int i = 0 ; i <= pow(2,this->global_depth)/2 ; i++){
+        auxBucket = this->buckets[i+1];
+        this->buckets[i+1] = this->buckets[i];
+        this->buckets[i+2] = auxBucket;
+    }
+    //Faço o ultimo apontar para o balde do  ante penultimo
+    
+    this->buckets[pow(2,this->global_depth)] = this->buckets[pow(2,this->global_depth -1)];
 }
 
 void Directory::PrintInfo()

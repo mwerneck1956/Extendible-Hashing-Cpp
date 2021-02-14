@@ -25,6 +25,7 @@ public:
     long int binary_to_decimal(long int n);
     void PrintInfo();
     bool Find(long long int value);
+    void DuplicateDirectory();
 
 };
 

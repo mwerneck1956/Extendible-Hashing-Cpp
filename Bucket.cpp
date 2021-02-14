@@ -52,12 +52,22 @@ void Bucket::RecalculateLocalDepth(string value, int global_depth)
     string significant_bits = value.substr(0, global_depth);
     //Ocorrência dos bits significativos no meu vetor
     int valueOcorrence = 0;
-
-    //Iterar nos elementos do meu balde, e pega os n bits significativos de todos
-    for (int i = 0; i < this->GetUsedSize(); i++)
+    int equalBits;
+    //equalBits.reserve(global_depth);
+    this->local_depth = 0;
+    for (int i = 0; i < global_depth; i++)
     {
-        if (significant_bits == this->hashedValues[i].substr(0, global_depth))
-            valueOcorrence++;
+        equalBits = 0;
+        for (int j = 0; j < this->GetUsedSize(); j++)
+        {
+            if (significant_bits.at(i) == this->hashedValues[j].substr(0, global_depth).at(i)){
+                 //Se algum bit é diferente eles não possuim nenhum bit em comum em todos os valores
+                 equalBits++;
+                 break;
+            }
+        }
+        if(equalBits == this->GetUsedSize())
+            this->local_depth++;
     }
 
     //Se a ocorrência do valor inserido for maior que a minha profundidade local, tenho que alterar a mesma
@@ -75,18 +85,19 @@ bool Bucket::Insert(string hashedValue, int global_depth)
         this->RecalculateLocalDepth(hashedValue, global_depth);
         this->usedSize++;
 
-        cout << "Profundidade nova " << this->GetLocalDepth() << endl;
         return true;
     }
 
     return false;
 }
 
-void Bucket::PrintBucket(){
+void Bucket::PrintBucket()
+{
     cout << "Balde " << endl;
     cout << "Valores : ";
-    for(string value : this->hashedValues){
-        cout << value +",";  
+    for (string value : this->hashedValues)
+    {
+        cout << value + ",";
     }
     cout << endl;
 }
@@ -104,7 +115,6 @@ bool Bucket::IsFull()
 
 int Bucket::Find(string value)
 {
-    cout << "Valor recebido brow " << value << endl;
     int index = 0;
     for (string currentValue : this->hashedValues)
     {
@@ -116,7 +126,6 @@ int Bucket::Find(string value)
     //Se não achar o valor retorrna -1
     return -1;
 }
-
 
 void Bucket::Remove(string value, int global_depth)
 {
@@ -131,8 +140,8 @@ void Bucket::Remove(string value, int global_depth)
             this->hashedValues.erase(this->hashedValues.begin() + index);
             RecalculateLocalDepth(value, local_depth);
             this->hashedValues.push_back(value);
+            index++;
         }
-
     }
 }
 
@@ -151,7 +160,6 @@ void Bucket::Remove(int pos, int global_depth)
         index++;
     }
 
-    cout << "Nova profundidade :  " << this->local_depth << endl;
 }
 
 Bucket::~Bucket()
