@@ -23,6 +23,7 @@ public:
     string hash(long long int n);
     void Insert(long long int value);
     long int binary_to_decimal(long int n);
+    void PrintInfo();
 };
 
 #endif

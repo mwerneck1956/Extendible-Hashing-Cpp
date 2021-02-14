@@ -48,5 +48,21 @@ void Directory::Insert(long long int value){
     string hashedValue = this->hash(value);
     //Pego as posições significativas da chave que serão relativas ao global_depth
     string significantBits = hashedValue.substr(0,this->global_depth);
-    this->buckets[this->binary_to_decimal(stoi(significantBits))]->Insert(hashedValue, value);
+    //Pego os bits mais significativos para achar em que posição do meu diretório o valor vai ficar
+    int valueIndex = this->binary_to_decimal(stoi(significantBits)); 
+    //Inserção do valor no respectivo indice do diretório
+    this->buckets[valueIndex]->Insert(hashedValue , this->global_depth);
+
+}
+
+void Directory::PrintInfo(){
+    for(int i = 0 ; i < this->buckets.size() ; i++){
+        cout << "Diretório : " << i  << endl;
+        cout << "Valores : ";
+        int bucketSize = this->buckets[i]->GetSize();
+        for(int j  = 0 ; j < bucketSize; j++){
+            cout << this->buckets[i]->GetElement(j) + " ,"; 
+        }
+        cout << endl;
+    }
 }

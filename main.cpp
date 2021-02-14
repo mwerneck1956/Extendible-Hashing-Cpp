@@ -1,21 +1,24 @@
-#include<iostream>
-#include<list>
-#include<vector>
-#include"./Directory.h"
+#include <iostream>
+#include <list>
+#include <vector>
+#include "./Directory.h"
 
 using namespace std;
 
-int main(){
-    int number_of_bits,bucket_size;
+int main()
+{
+    int number_of_bits, bucket_size;
     cout << "Digite o tamanho  máximo de bits e tamanho do balde" << endl;
     cin >> number_of_bits >> bucket_size;
-    Directory* directory = new Directory(number_of_bits,bucket_size);
-    long long int toHash=10;
-    while(toHash!=0){
-        cout << "Digite um valor" << endl;
-        cin >> toHash;
-        cout << "Hash : " << directory->hash(toHash) << endl;
+    Directory *directory = new Directory(number_of_bits, bucket_size);
+    int value;
+    while (value != 0)
+    {
+        cout << "Digite o valor a ser inserido no diretório" << endl;
+        cin >> value;
+        directory->Insert(value);
     }
 
+    directory->PrintInfo();
 
 }
