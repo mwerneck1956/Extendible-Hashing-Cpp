@@ -4,7 +4,7 @@
   <img alt="Version" src="https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000" />
 </p>
 
-> Atividade de 
+> Atividade de implementação da disciplina de Estrutura de Dados 2, consiste em uma implementação de um hashing extensível.
 ## Autor
 
 👤 **Matheus Werneck**
