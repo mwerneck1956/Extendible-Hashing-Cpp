@@ -15,6 +15,7 @@ private:
     int global_depth;
     int bucket_max_size;
     int number_of_bits;
+    int single_buckets;
     vector<Bucket *> buckets;
 
 public:
@@ -26,6 +27,7 @@ public:
     void PrintInfo();
     bool Find(long long int value);
     void DuplicateDirectory();
+    int getNumberOfBuckets();
 
 };
 
