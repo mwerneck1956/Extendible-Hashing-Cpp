@@ -104,6 +104,7 @@ bool Bucket::IsFull()
 
 int Bucket::Find(string value)
 {
+    cout << "Valor recebido brow " << value << endl;
     int index = 0;
     for (string currentValue : this->hashedValues)
     {
@@ -132,7 +133,6 @@ void Bucket::Remove(string value, int global_depth)
             this->hashedValues.push_back(value);
         }
 
-        cout << "Nova profundidade " << this->local_depth << endl;
     }
 }
 

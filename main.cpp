@@ -23,7 +23,15 @@ int main()
         cout << "Digite o valor a ser inserido no diretório" << endl;
         cin >> value;
     }
+
+    cout << "Digite o valor a ser buscado " << endl;
+    cin >> value;
+    if(directory->Find(value))
+        cout << "Valor achado" << endl;
+    else
+        cout << "Valor n achado" << endl;
+    
     
 
-     directory->PrintInfo();
+     //directory->PrintInfo();
 }

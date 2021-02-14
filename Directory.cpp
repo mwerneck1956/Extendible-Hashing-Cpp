@@ -61,7 +61,7 @@ void Directory::Insert(long long int value)
     {
         Bucket *newBucket = new Bucket(this->bucket_max_size);
 
-        //Insiro o novo valor no novo balde
+        //Insiro o novo valor no novo balde´
         newBucket->Insert(hashedValue, global_depth);
 
         cout << "Size do balde : " << this->buckets[valueIndex]->GetSize() << endl;
@@ -79,7 +79,7 @@ void Directory::Insert(long long int value)
             if (this->buckets[valueIndex]->GetElement(i).substr(0, this->global_depth) == significantBits)
             {
                 newBucket->Insert(this->buckets[valueIndex]->GetElement(i), this->global_depth);
-                //Adiciono no meu vetor de inseridos para remover o valor do meu balde antigo
+                //Adiciono no meu vetor de inseridos ´para remover o valor do meu balde antigo
                 insertedValues.push_back(this->buckets[valueIndex]->GetElement(i));
                 //Removo valor inserido no novo balde do balde antigo.
                 //this->buckets[valueIndex]->Remove(i, this->global_depth);
@@ -92,6 +92,26 @@ void Directory::Insert(long long int value)
 
         this->buckets[valueIndex] = newBucket;
     }
+}
+
+bool Directory::Find(long long int value)
+{
+    //Aplico a função de hash no valor obtido
+    string hashedValue = this->hash(value,this->number_of_bits);
+
+    //Pego os bits significativos do valor para saber
+    //posição do diretório que ele deverá ocupar se existirr
+    string signficantBits = hashedValue.substr(0,this->global_depth);
+    long int position = this->binary_to_decimal(stoi(signficantBits));
+
+    //Acesso a posição no meu diretório, se exister e proucuro pela chave no balde
+    if(this->buckets[position] != NULL){
+        if(this->buckets[position]->Find(hashedValue) != -1)
+            return true;
+    }       
+
+    //Se o indice for invalido ou o valor não existir no balde retorno falso
+    return false;
 }
 
 void Directory::PrintInfo()
