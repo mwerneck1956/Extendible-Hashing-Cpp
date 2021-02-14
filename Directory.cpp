@@ -71,7 +71,7 @@ void Directory::Insert(long long int value)
         vector<string> insertedValues;
         insertedValues.reserve(this->bucket_max_size);
 
-        for (int i = 0; i < this->buckets[valueIndex]->GetSize(); i++)
+        for (int i = 0; i < this->buckets[valueIndex]->GetUsedSize(); i++)
         {
             //Se o valor que estou passando tiver os bits significativos igual do valor a ser inserido
             //vou remover ele do balde original e guardar no meu novo balde
@@ -85,7 +85,9 @@ void Directory::Insert(long long int value)
 
         //Removo valores inseridos no balde novo do meu balde antigo
         for (string value : insertedValues)
+        {
             this->buckets[valueIndex]->Remove(value, this->global_depth);
+        }
 
         this->buckets[valueIndex] = newBucket;
     }
@@ -98,11 +100,7 @@ void Directory::Insert(long long int value)
         //Como o balde foi duplicado altero o valor dos bits significantes da minha hash
         significantBits = hashedValue.substr(0, this->global_depth);
 
-
         int elementPosition = this->binary_to_decimal(stoi(significantBits));
-
-
-        this->buckets[elementPosition]->PrintBucket();
 
         //Crio um novo balde
         Bucket *newBucket = new Bucket(this->bucket_max_size);
@@ -120,16 +118,13 @@ void Directory::Insert(long long int value)
             //Se os bits significativos da chave são iguais ao do comparado insiro no novo balde
             if (this->buckets[elementPosition]->GetElement(i).substr(0, this->global_depth) == significantBits)
             {
-                cout << "Achou igual " << endl;
                 newBucket->Insert(this->buckets[elementPosition]->GetElement(i), this->global_depth);
                 insertedValues.push_back(this->buckets[elementPosition]->GetElement(i));
             }
         }
         //Removo valores inseridos no balde novo do meu balde antigo
         for (string value : insertedValues)
-        {
             this->buckets[elementPosition]->Remove(value, this->global_depth);
-        }
 
         //Faço meu diretório da posição atual apontar par o novo balde
         this->buckets[elementPosition] = newBucket;
@@ -199,7 +194,7 @@ void Directory::PrintInfo()
         {
             cout << "Diretório : " << i << endl;
             cout << "Valores : ";
-            int bucketSize = this->buckets[i]->GetSize();
+            int bucketSize = this->buckets[i]->GetUsedSize();
             for (int j = 0; j < bucketSize; j++)
             {
                 cout << this->buckets[i]->GetElement(j) + " ,";

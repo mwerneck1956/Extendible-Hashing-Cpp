@@ -14,10 +14,6 @@ string Bucket::GetElement(int pos)
     return this->hashedValues[pos];
 }
 
-int Bucket::GetSize()
-{
-    return this->usedSize;
-}
 
 int Bucket::GetLocalDepth()
 {

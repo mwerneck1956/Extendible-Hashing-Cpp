@@ -6,34 +6,37 @@
 
 using namespace std;
 
+vector<string> testeVetor()
+{
+    vector<string> teste;
+    teste.push_back("00100");
+    teste.push_back("00111");
+    teste.push_back("00011");
+    teste.push_back("01101");
+    teste.push_back("10100");
+    teste.push_back("10000");
+    teste.push_back("11000");
+    teste.push_back("11110");
+    teste.push_back("00000");
 
+
+    return teste;
+}
 
 int main()
 {
     int number_of_bits, bucket_size;
-    vector<string>teste;
+    vector<string> teste = testeVetor();
 
     cout << "Digite o tamanho  máximo de bits e tamanho do balde" << endl;
     cin >> number_of_bits >> bucket_size;
     Directory *directory = new Directory(number_of_bits, bucket_size);
-    string value;
-    cout << "Digite o valor a ser inserido no diretório" << endl;
-    cin >> value;
-   // cout << "decimal " << directory->binary_to_decimal(stoi("01"));
-    
-    while (value != "a")
+    int i =0;
+    while(i < teste.size())
     {
-        directory->Insert(directory->binary_to_decimal(stoi(value)));
-        cout << "Digite o valor a ser inserido no diretório" << endl;
-        cin >> value;
+        directory->Insert(directory->binary_to_decimal(stoi(teste.at(i))));
+        i++;
     }
-    /*
-    cout << "Digite o valor a ser buscado " << endl;
-    cin >> value;
-    if(directory->Find(value))
-        cout << "Valor achado" << endl;
-    else
-        cout << "Valor n achado" << endl;
-    */
-   directory->PrintInfo();
+
+    directory->PrintInfo();
 }
