@@ -20,4 +20,4 @@
 chmod +x compileAndRun.sh 
 ```
 
-1. Se a compilação ocorrer com sucesso, digite ./main no terminal para executar o programa.
+2. Se a compilação ocorrer com sucesso, digite ./main no terminal para executar o programa.
