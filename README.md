@@ -20,4 +20,4 @@
 chmod +x compileAndRun.sh 
 ```
 
-1. Se a compilação ocorrer com sucesso, o arquivo compilado será executado automaticamente.
+1. Se a compilação ocorrer com sucesso, digite ./main no terminal para executar o programa.
