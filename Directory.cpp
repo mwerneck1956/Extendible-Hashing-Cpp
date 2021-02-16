@@ -4,7 +4,7 @@ Directory::Directory(int number_of_bits, int bucket_max_size)
 {
     this->number_of_bits = number_of_bits;
     this->bucket_max_size = bucket_max_size;
-    this->single_buckets =0;
+    this->single_buckets = 0;
     //Por conveniência inicializo o global_depth com 2
     this->global_depth = 2;
 
@@ -21,6 +21,7 @@ Directory::Directory(int number_of_bits, int bucket_max_size)
 //Transforma um valor inteiro em binário(bitwize)
 string Directory::hash(long long int value, int number_of_btis)
 {
+
     string hashedValue;
     for (int i = number_of_bits - 1; i >= 0; i--)
     {
@@ -30,7 +31,6 @@ string Directory::hash(long long int value, int number_of_btis)
         else
             hashedValue.push_back('0');
     }
-
     return hashedValue;
 }
 
@@ -63,6 +63,7 @@ void Directory::Insert(long long int value)
     //Caso médio
     else if (this->buckets[valueIndex]->IsFull() && this->global_depth > this->buckets[valueIndex]->GetLocalDepth())
     {
+
         Bucket *newBucket = new Bucket(this->bucket_max_size);
         this->single_buckets++;
 
@@ -95,8 +96,9 @@ void Directory::Insert(long long int value)
         this->buckets[valueIndex] = newBucket;
     }
     //pior caso
-    else
+    else if(this->global_depth < this->number_of_bits)
     {
+
         //Duplico meu diretório
         this->DuplicateDirectory();
 
@@ -169,7 +171,6 @@ void Directory::DuplicateDirectory()
 
     for (int i = pow(2, this->global_depth); i < pow(2, this->global_depth + 1); i++)
     {
-        this->single_buckets++;
         this->buckets.push_back(NULL);
     }
 

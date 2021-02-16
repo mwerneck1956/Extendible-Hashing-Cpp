@@ -10,28 +10,46 @@ using namespace std;
 
 vector<long long int> generateRandomNumbers(int max_bits, int size)
 {
-    std::random_device device;
-    std::mt19937 generator(device());
-    std::uniform_int_distribution<long long int> distribution(0, pow(2, max_bits) - 1);
+    random_device device;
+    mt19937 generator(device());
+    uniform_int_distribution<long long int> distribution(0, pow(2, max_bits) - 1);
     vector<long long int> randomNumbers;
     randomNumbers.reserve(size);
     for (int i = 0; i < size; i++)
     {
-        randomNumbers.push_back(distribution(generator));
+        long int value = distribution(generator);
+        randomNumbers.push_back(value);
     }
 
     return randomNumbers;
 }
 
-vector<long long int> generateRandomValuesWithSamePattern(int size , int max_bits)
+vector<string> generateRandomValuesWithSamePattern(int size, int max_bits)
 {
-    std::uniform_int_distribution<long long int> distribution(0,1);
+    //O padrão é sempre começar com 1;
 
+    random_device device;
+    mt19937 generator(device());
+    uniform_int_distribution<char> distribution('0', '1');
+    vector<string> binaryValues;
+    binaryValues.reserve(size);
+    string aux = "";
+    int i = 0;
+    while (i < size)
+    {
+        aux.push_back('1');
+        for (int j = 1; j < max_bits; j++)
+        {
+            aux.push_back(distribution(generator));
+        }
+        binaryValues.push_back(aux);
+        aux = "";
+        i++;
+    }
 
-    vector<long long int> a;
-    return a;
+    return binaryValues;
 }
-
+/*
 vector<string> testeVetor()
 {
     vector<string> teste;
@@ -67,10 +85,11 @@ vector<string> testeVetor()
 
     return teste;
 }
-
+*/
 int main()
 {
-    int number_of_bits, bucket_size, random_size;
+
+    int number_of_bits, bucket_size, random_size, option;
 
     cout << "-------------------Hashing Extensível---------------------" << endl;
     cout << "Aluno: Matheus Gomes Luz Werneck (201835037) " << endl
@@ -82,28 +101,53 @@ int main()
     cin >> bucket_size;
     cout << "Digite o número de registros aleatórios" << endl;
     cin >> random_size;
-    vector<long long int> teste = generateRandomNumbers(number_of_bits, random_size);
-
+    cout << "Digite [1] para pseudo-chaves totalmente aleatórios" << endl;
+    cout << "Digite [2] para  pseudo-chaves iniciadas com um mesmo padrão de bits" << endl;
+    cin >> option;
     Directory *directory = new Directory(number_of_bits, bucket_size);
-    int i = 0, progress = 0;
-    while (i < teste.size())
+
+    if (option == 1)
     {
-        directory->Insert(teste.at(i));
-        progress++;
-        if (progress == 100)
+        vector<long long int> randomNums = generateRandomNumbers(number_of_bits, random_size);
+        int i = 0, progress = 0;
+        while (i < randomNums.size() - 1)
         {
-            cout << "Na iteração  " << i << "...." << endl;
-            progress = 0;
+            directory->Insert(randomNums.at(i));
+            progress++;
+            if (progress == 100)
+            {
+                cout << "Na iteração  " << i << "...." << endl;
+                progress = 0;
+            }
+            i++;
         }
-        i++;
     }
-    double loadFactor = (float(teste.size()) / (directory->getNumberOfBuckets() * bucket_size));
+    else
+    {
+        vector<string> randomNums = generateRandomValuesWithSamePattern(random_size, number_of_bits);
+        int i = 0, progress = 0;
+        while (i < randomNums.size())
+        {
+            directory->Insert(directory->binary_to_decimal(stoull(randomNums.at(i))));
+            progress++;
+            if (progress == 100)
+            {
+                cout << "Na iteração  " << i << "...." << endl;
+                progress = 0;
+            }
+            i++;
+        }
+    }
+
+    double loadFactor = (float(random_size) / (directory->getNumberOfBuckets() * bucket_size));
 
     cout << "--------------------------------------RESULTADOS--------------------------------------" << endl;
-    cout << "Número de chaves : " << teste.size() << endl;
+    cout << "Número de chaves : " << random_size << endl;
     cout << "Número de baldes : " << directory->getNumberOfBuckets() << endl;
     cout << "Fator de carga : " << loadFactor << endl;
     cout << "--------------------------------------------------------------------------------------" << endl;
-    ;
 
+    //directory->PrintInfo();
+
+    //delete &directory;
 }

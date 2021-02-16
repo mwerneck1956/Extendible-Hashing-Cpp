@@ -32,28 +32,24 @@ void Bucket::SetLocalDepth(int new_local_depth)
 void Bucket::RecalculateLocalDepth(string value, int global_depth)
 {
 
-    string significant_bits = value.substr(0, global_depth - 1);
+    string significant_bits = value.substr(0, global_depth);
     //Ocorrência dos bits significativos no meu vetor
     int valueOcorrence = 0;
     int equalBits;
     this->local_depth = 0;
-    try
+
+    for (int i = 0; i < global_depth; i++)
     {
-        for (int i = 0; i < global_depth; i++)
+        equalBits = 0;
+        for (int j = 0; j < this->GetUsedSize(); j++)
         {
-            equalBits = 0;
-            for (int j = 0; j < this->GetUsedSize(); j++)
-            { 
-                if (significant_bits.at(i) == this->hashedValues[j].at(i))
-                {
-                    equalBits++;
-                }
+            if (significant_bits.at(i) == this->hashedValues[j].at(i))
+            {
+                equalBits++;
             }
-            if (equalBits == this->GetUsedSize())
-                this->local_depth++;
         }
-    }catch(...){
-        
+        if (equalBits == this->GetUsedSize())
+            this->local_depth++;
     }
 }
 
