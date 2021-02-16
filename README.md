@@ -17,7 +17,7 @@
 
 1. Para dar autorização ao shellscript digite no terminal :
 ```
-chmod +x compileAndRun.sh 
+chmod +x compile.sh 
 ```
 
 2. Se a compilação ocorrer com sucesso, digite no terminal : 
