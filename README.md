@@ -15,9 +15,12 @@
 
 **Certifique-se de ter o g++ instalado no seu ambiente de desenvolvimento**
 
-1. Para dar autorização ao shellscript digite no terminal 
+1. Para dar autorização ao shellscript digite no terminal :
 ```
 chmod +x compileAndRun.sh 
 ```
 
-1. Se a compilação ocorrer com sucesso, o arquivo compilado será executado automaticamente.
+2. Se a compilação ocorrer com sucesso, digite no terminal : 
+```
+./main
+```
