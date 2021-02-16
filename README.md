@@ -31,6 +31,7 @@ chmod +x compile.sh
 ## Para a análise foram feitos os seguintes testes, para instâncias com o mesmo padrão de bits, e randomizadas : 
 
 Teste 1 :
+
 -Número de bits : 4
 
 -Tamanho do balde : 4
@@ -38,6 +39,7 @@ Teste 1 :
 -Número de registros : 64
 
 Teste 2 :
+
 -Número de bits : 6
 
 -Tamanho do balde : 4
