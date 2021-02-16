@@ -5,6 +5,7 @@ Directory::Directory(int number_of_bits, int bucket_max_size)
     this->number_of_bits = number_of_bits;
     this->bucket_max_size = bucket_max_size;
     this->single_buckets = 0;
+    this->number_of_keys = 0;
     //Por conveniência inicializo o global_depth com 2
     this->global_depth = 2;
 
@@ -34,7 +35,7 @@ string Directory::hash(long long int value, int number_of_btis)
     return hashedValue;
 }
 
-long int Directory::binary_to_decimal(long int n)
+long long int Directory::binary_to_decimal(long long int n)
 {
     int decimal = 0, i = 0, remainder;
     while (n != 0)
@@ -54,11 +55,15 @@ void Directory::Insert(long long int value)
     //Pego as posições significativas da chave que serão relativas ao global_depth
     string significantBits = hashedValue.substr(0, this->global_depth);
     //Pego os bits mais significativos para achar em que posição do meu diretório o valor vai ficar
-    int valueIndex = this->binary_to_decimal(stoll(significantBits));
+
+    long long int valueIndex = this->binary_to_decimal(stoll(significantBits));
 
     if (!this->buckets[valueIndex]->IsFull())
     {
         this->buckets[valueIndex]->Insert(hashedValue, this->global_depth);
+        //Atualizo meu contador de chaves inseridas
+        this->number_of_keys++;
+
     }
     //Caso médio
     else if (this->buckets[valueIndex]->IsFull() && this->global_depth > this->buckets[valueIndex]->GetLocalDepth())
@@ -66,9 +71,13 @@ void Directory::Insert(long long int value)
 
         Bucket *newBucket = new Bucket(this->bucket_max_size);
         this->single_buckets++;
+        
 
         //Insiro o novo valor no novo balde
         newBucket->Insert(hashedValue, global_depth);
+
+        //Atualizo meu contador de chaves inseridas
+        this->number_of_keys++;
 
         //Guarda os valores que vão ser inseridos no novo balde, e depois vão ter que
         //ser removidos do antigo balde.
@@ -105,7 +114,7 @@ void Directory::Insert(long long int value)
         //Como o balde foi duplicado altero o valor dos bits significantes da minha hash
         significantBits = hashedValue.substr(0, this->global_depth);
 
-        int elementPosition = this->binary_to_decimal(stoll(significantBits));
+        long long int elementPosition = this->binary_to_decimal(stoll(significantBits));
 
         //Crio um novo balde
         Bucket *newBucket = new Bucket(this->bucket_max_size);
@@ -114,10 +123,14 @@ void Directory::Insert(long long int value)
         //Insiro o novo valor nele
         newBucket->Insert(hashedValue, this->global_depth);
 
+        //Atualizo meu contador de chaves inseridas
+        this->number_of_keys++;
+
         //Vetor auxiliar para guardar os valores que irão ser inseridos no novo balde
         //e posteriormente deletados do balde antigo
         vector<string> insertedValues;
         insertedValues.reserve(this->bucket_max_size);
+
         //Pego todas as chaves com bits significativos iguais a da ser inserida e jogo em um novo balde
         for (int i = 0; i < this->buckets[elementPosition]->GetUsedSize(); i++)
         {
@@ -145,7 +158,7 @@ bool Directory::Find(long long int value)
     //Pego os bits significativos do valor para saber
     //posição do diretório que ele deverá ocupar se existirr
     string signficantBits = hashedValue.substr(0, this->global_depth);
-    long int position = this->binary_to_decimal(stoll(signficantBits));
+    long long int position = this->binary_to_decimal(stoll(signficantBits));
 
     //Acesso a posição no meu diretório, se exister e proucuro pela chave no balde
     if (this->buckets[position] != NULL)
@@ -158,9 +171,13 @@ bool Directory::Find(long long int value)
     return false;
 }
 
-int Directory::getNumberOfBuckets()
+int Directory::GetNumberOfBuckets()
 {
     return this->single_buckets;
+}
+
+long int Directory::GetNumberOfKeys(){
+    return this->number_of_keys;
 }
 
 void Directory::DuplicateDirectory()

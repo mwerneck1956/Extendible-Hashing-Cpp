@@ -16,6 +16,7 @@ private:
     int bucket_max_size;
     int number_of_bits;
     int single_buckets;
+    long int number_of_keys;
     vector<Bucket *> buckets;
 
 public:
@@ -23,11 +24,12 @@ public:
     ~Directory();
     string hash(long long int n , int number_of_bits);
     void Insert(long long int value);
-    long int binary_to_decimal(long int n);
+    long long int binary_to_decimal(long long int n);
     void PrintInfo();
     bool Find(long long int value);
     void DuplicateDirectory();
-    int getNumberOfBuckets();
+    int GetNumberOfBuckets();
+    long int GetNumberOfKeys();
 
 };
 

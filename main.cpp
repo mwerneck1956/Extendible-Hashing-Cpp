@@ -114,7 +114,7 @@ int main()
         {
             directory->Insert(randomNums.at(i));
             progress++;
-            if (progress == 100)
+            if (progress == 1000)
             {
                 cout << "Na iteração  " << i << "...." << endl;
                 progress = 0;
@@ -130,7 +130,7 @@ int main()
         {
             directory->Insert(directory->binary_to_decimal(stoull(randomNums.at(i))));
             progress++;
-            if (progress == 100)
+            if (progress == 1000)
             {
                 cout << "Na iteração  " << i << "...." << endl;
                 progress = 0;
@@ -139,11 +139,11 @@ int main()
         }
     }
 
-    double loadFactor = (float(random_size) / (directory->getNumberOfBuckets() * bucket_size));
+    double loadFactor = (float(directory->GetNumberOfKeys()) / (directory->GetNumberOfBuckets() * bucket_size));
 
     cout << "--------------------------------------RESULTADOS--------------------------------------" << endl;
-    cout << "Número de chaves : " << random_size << endl;
-    cout << "Número de baldes : " << directory->getNumberOfBuckets() << endl;
+    cout << "Número de chaves inseridas : " << directory->GetNumberOfKeys()  << endl;
+    cout << "Número de baldes : " << directory->GetNumberOfBuckets() << endl;
     cout << "Fator de carga : " << loadFactor << endl;
     cout << "--------------------------------------------------------------------------------------" << endl;
 
