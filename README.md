@@ -32,27 +32,40 @@ chmod +x compile.sh
 
 Teste 1 :
 -Número de bits : 4
+
 -Tamanho do balde : 4
+
 -Número de registros : 64
 
 Teste 2 :
 -Número de bits : 6
+
 -Tamanho do balde : 4
+
 -Número de registros : 256
 
 Teste 3 : 
+
 -Número de bits : 8
+
 -Tamanho do balde : 4
+
 -Número de registros : 512
 
 Teste 4 : 
+
 -Número de bits : 12
+
 -Tamanho do balde : 4
+
 -Número de registros : 3000
 
 Teste 5 : 
+
 -Número de bits : 16
+
 -Tamanho do balde : 4
+
 -Número de registros : 10000
 
 Obs: O arquivo txt contendo o resultado desses testes se encontra no repositório , nomeado como saidaTeste.txt.
