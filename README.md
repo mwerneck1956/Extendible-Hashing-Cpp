@@ -33,7 +33,9 @@ chmod +x compile.sh
 Teste 1 :
 
 -Número de bits : 4
+
 -Tamanho do balde : 4
+
 -Número de registros : 64
 
 Teste 2 :
