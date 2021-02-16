@@ -49,6 +49,8 @@ vector<string> generateRandomValuesWithSamePattern(int size, int max_bits)
 
     return binaryValues;
 }
+
+//Código feito para testes manuais de inserção
 /*
 vector<string> testeVetor()
 {
@@ -56,35 +58,30 @@ vector<string> testeVetor()
     teste.push_back("00100");
     teste.push_back("00111");
     teste.push_back("00011");
+    teste.push_back("00000");
+
     teste.push_back("01101");
+    teste.push_back("01100");
+
     teste.push_back("10100");
     teste.push_back("10000");
     teste.push_back("11000");
     teste.push_back("11110");
-    teste.push_back("00000");
-    teste.push_back("00000");
-    teste.push_back("00000");
-    teste.push_back("00000");
-    teste.push_back("00000");
-    teste.push_back("00000");
-    teste.push_back("00000");
-    teste.push_back("00000");
-    teste.push_back("00000");
-    teste.push_back("00000");
-    teste.push_back("00000");
-    teste.push_back("00000");
-    teste.push_back("00000");
-    teste.push_back("00000");
-    teste.push_back("00000");
-    teste.push_back("00000");
-    teste.push_back("00000");
-    teste.push_back("00000");
-    teste.push_back("00000");
-    teste.push_back("00000");
-    teste.push_back("00000");
+    teste.push_back("11111");
+    teste.push_back("00001");
 
     return teste;
 }
+   vector<string> teste = testeVetor();
+    int i = 0;
+    while (i < teste.size())
+    {
+        directory->Insert(directory->binary_to_decimal(stoull(teste.at(i))));
+        i++;
+    }
+
+    directory->PrintInfo();
+
 */
 int main()
 {
@@ -110,7 +107,7 @@ int main()
     {
         vector<long long int> randomNums = generateRandomNumbers(number_of_bits, random_size);
         int i = 0, progress = 0;
-        while (i < randomNums.size() - 1)
+        while (i < randomNums.size())
         {
             directory->Insert(randomNums.at(i));
             progress++;
@@ -144,10 +141,8 @@ int main()
     cout << "--------------------------------------RESULTADOS--------------------------------------" << endl;
     cout << "Número de chaves inseridas : " << directory->GetNumberOfKeys()  << endl;
     cout << "Número de baldes : " << directory->GetNumberOfBuckets() << endl;
-    cout << "Fator de carga : " << loadFactor << endl;
+    cout << "Fator de carga : " << loadFactor * 100 << endl;
     cout << "--------------------------------------------------------------------------------------" << endl;
 
-    //directory->PrintInfo();
 
-    //delete &directory;
 }

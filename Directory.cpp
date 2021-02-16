@@ -49,6 +49,48 @@ long long int Directory::binary_to_decimal(long long int n)
     return decimal;
 }
 
+Bucket *Directory::SplitBucket(string key)
+{
+    Bucket *newBucket = new Bucket(this->bucket_max_size);
+    this->single_buckets++;
+
+    //Pego o índice referente a posição do diretório que a chave deve se encontrado
+    string significantBits = key.substr(0, this->global_depth);
+    long long int keyPosition = this->binary_to_decimal(stoll(significantBits));
+
+    //Insiro o novo valor no novo balde
+    newBucket->Insert(key, global_depth);
+
+    //Atualizo meu contador de chaves inseridas
+    this->number_of_keys++;
+
+    //Guarda os valores que vão ser inseridos no novo balde, e depois vão ter que
+    //ser removidos do antigo balde.
+    vector<string> insertedValues;
+    insertedValues.reserve(this->bucket_max_size);
+
+    for (int i = 0; i < this->buckets[keyPosition]->GetUsedSize(); i++)
+    {
+        //Se o valor que estou passando tiver os bits significativos igual do valor a ser inserido
+        //vou remover ele do balde original e guardar no meu novo balde
+        if (this->buckets[keyPosition]->GetElement(i).substr(0, this->global_depth) == significantBits)
+        {
+            newBucket->Insert(this->buckets[keyPosition]->GetElement(i), this->global_depth);
+            //Adiciono no meu vetor de inseridos ´para remover o valor do meu balde antigo
+            insertedValues.push_back(this->buckets[keyPosition]->GetElement(i));
+        }
+    }
+
+    //Removo valores inseridos no balde novo do meu balde antigo
+    for (string value : insertedValues)
+    {
+        this->buckets[keyPosition]->Remove(value, this->global_depth);
+    }
+
+    //Retorna o balde obtido da divisão entre os dois baldes
+    return newBucket;
+}
+
 void Directory::Insert(long long int value)
 {
     string hashedValue = this->hash(value, this->number_of_bits);
@@ -63,49 +105,16 @@ void Directory::Insert(long long int value)
         this->buckets[valueIndex]->Insert(hashedValue, this->global_depth);
         //Atualizo meu contador de chaves inseridas
         this->number_of_keys++;
-
     }
     //Caso médio
     else if (this->buckets[valueIndex]->IsFull() && this->global_depth > this->buckets[valueIndex]->GetLocalDepth())
     {
-
-        Bucket *newBucket = new Bucket(this->bucket_max_size);
-        this->single_buckets++;
-        
-
-        //Insiro o novo valor no novo balde
-        newBucket->Insert(hashedValue, global_depth);
-
-        //Atualizo meu contador de chaves inseridas
-        this->number_of_keys++;
-
-        //Guarda os valores que vão ser inseridos no novo balde, e depois vão ter que
-        //ser removidos do antigo balde.
-        vector<string> insertedValues;
-        insertedValues.reserve(this->bucket_max_size);
-
-        for (int i = 0; i < this->buckets[valueIndex]->GetUsedSize(); i++)
-        {
-            //Se o valor que estou passando tiver os bits significativos igual do valor a ser inserido
-            //vou remover ele do balde original e guardar no meu novo balde
-            if (this->buckets[valueIndex]->GetElement(i).substr(0, this->global_depth) == significantBits)
-            {
-                newBucket->Insert(this->buckets[valueIndex]->GetElement(i), this->global_depth);
-                //Adiciono no meu vetor de inseridos ´para remover o valor do meu balde antigo
-                insertedValues.push_back(this->buckets[valueIndex]->GetElement(i));
-            }
-        }
-
-        //Removo valores inseridos no balde novo do meu balde antigo
-        for (string value : insertedValues)
-        {
-            this->buckets[valueIndex]->Remove(value, this->global_depth);
-        }
-
-        this->buckets[valueIndex] = newBucket;
+        //Vai dividir o balde original utilizando como chave o valor a ser inserido,e
+        //retorna o balde criado para armazenar as chaves do mesmo padrão do valor a ser inserido
+        this->buckets[valueIndex] = SplitBucket(hashedValue);
     }
     //pior caso
-    else if(this->global_depth < this->number_of_bits)
+    else if (this->global_depth < this->number_of_bits)
     {
 
         //Duplico meu diretório
@@ -116,6 +125,11 @@ void Directory::Insert(long long int value)
 
         long long int elementPosition = this->binary_to_decimal(stoll(significantBits));
 
+        this->buckets[elementPosition] = SplitBucket(hashedValue);
+
+        /*
+   
+   
         //Crio um novo balde
         Bucket *newBucket = new Bucket(this->bucket_max_size);
         this->single_buckets++;
@@ -146,7 +160,8 @@ void Directory::Insert(long long int value)
             this->buckets[elementPosition]->Remove(value, this->global_depth);
 
         //Faço meu diretório da posição atual apontar par o novo balde
-        this->buckets[elementPosition] = newBucket;
+        */
+        
     }
 }
 
@@ -176,7 +191,8 @@ int Directory::GetNumberOfBuckets()
     return this->single_buckets;
 }
 
-long int Directory::GetNumberOfKeys(){
+long int Directory::GetNumberOfKeys()
+{
     return this->number_of_keys;
 }
 

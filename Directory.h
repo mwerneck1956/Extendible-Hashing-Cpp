@@ -25,6 +25,7 @@ public:
     string hash(long long int n , int number_of_bits);
     void Insert(long long int value);
     long long int binary_to_decimal(long long int n);
+    Bucket* SplitBucket(string key);
     void PrintInfo();
     bool Find(long long int value);
     void DuplicateDirectory();
