@@ -1,0 +1,90 @@
+--------------------------------------RESULTADOS--------------------------------------
+Geração de números : Totalmente Aleatório
+Número de bits escolhido : 4
+Tamanho M do balde escolhido : 4
+Número de chaves inseridas : 56
+Número de baldes : 15
+Fator de carga : 93.33%
+Ocupação da memória : 4.992e+06 Kilobytes
+--------------------------------------------------------------------------------------
+--------------------------------------RESULTADOS--------------------------------------
+Geração de números :  Aleatório com mesmo padrão de bits
+Número de bits escolhido : 4
+Tamanho M do balde escolhido : 4
+Número de chaves inseridas : 32
+Número de baldes : 8
+Fator de carga : 100%
+Ocupação da memória : 2.752e+06 Kilobytes
+--------------------------------------------------------------------------------------
+--------------------------------------RESULTADOS--------------------------------------
+Geração de números :  Totalmente Aleatório
+Número de bits escolhido : 6
+Tamanho M do balde escolhido : 4
+Número de chaves inseridas : 216
+Número de baldes : 62
+Fator de carga : 87.1%
+Ocupação da memória : 2.003e+07 Kilobytes
+--------------------------------------------------------------------------------------
+--------------------------------------RESULTADOS--------------------------------------
+Geração de números :  Aleatório com mesmo padrão de bits
+Número de bits escolhido : 6
+Tamanho M do balde escolhido : 4
+Número de chaves inseridas : 121
+Número de baldes : 31
+Fator de carga : 97.58%
+Ocupação da memória : 1.011e+07 Kilobytes
+--------------------------------------------------------------------------------------
+--------------------------------------RESULTADOS--------------------------------------
+Geração de números :  Totalmente Aleatório
+Número de bits escolhido : 8
+Tamanho M do balde escolhido : 4
+Número de chaves inseridas : 484
+Número de baldes : 182
+Fator de carga : 66.48%
+Ocupação da memória : 5.843e+07 Kilobytes
+--------------------------------------------------------------------------------------
+--------------------------------------RESULTADOS--------------------------------------
+Geração de números :  Aleatório com mesmo padrão de bits
+Número de bits escolhido : 8
+Tamanho M do balde escolhido : 4
+Número de chaves inseridas : 360
+Número de baldes : 107
+Fator de carga : 84.11%
+Ocupação da memória : 3.443e+07 Kilobytes
+--------------------------------------------------------------------------------------
+--------------------------------------RESULTADOS--------------------------------------
+Geração de números :  Totalmente Aleatório
+Número de bits escolhido : 12
+Tamanho M do balde escolhido : 4
+Número de chaves inseridas : 2998
+Número de baldes : 1548
+Fator de carga : 48.42%
+Ocupação da memória : 4.956e+08 Kilobytes
+--------------------------------------------------------------------------------------
+--------------------------------------RESULTADOS--------------------------------------
+Geração de números :  Aleatório com mesmo padrão de bits
+Número de bits escolhido : 12
+Tamanho M do balde escolhido : 4
+Número de chaves inseridas : 2955
+Número de baldes : 1249
+Fator de carga : 59.15%
+Ocupação da memória : 3.999e+08 Kilobytes
+--------------------------------------------------------------------------------------
+--------------------------------------RESULTADOS--------------------------------------
+Geração de números :  Totalmente Aleatório
+Número de bits escolhido : 16
+Tamanho M do balde escolhido : 4
+Número de chaves inseridas : 10000
+Número de baldes : 5730
+Fator de carga : 43.63%
+Ocupação da memória : 1.834e+09 Kilobytes
+--------------------------------------------------------------------------------------
+--------------------------------------RESULTADOS--------------------------------------
+Geração de números :  Aleatório com mesmo padrão de bits
+Número de bits escolhido : 16
+Tamanho M do balde escolhido : 4
+Número de chaves inseridas : 10000
+Número de baldes : 5929
+Fator de carga : 42.17%
+Ocupação da memória : 1.897e+09 Kilobytes
+--------------------------------------------------------------------------------------

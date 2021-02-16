@@ -30,6 +30,7 @@ public:
     bool Find(long long int value);
     void DuplicateDirectory();
     int GetNumberOfBuckets();
+    double GetMemoryOcupation();
     long int GetNumberOfKeys();
 
 };

@@ -19,6 +19,30 @@ Directory::Directory(int number_of_bits, int bucket_max_size)
         this->buckets.push_back(firstBucket);
     }
 }
+
+
+int Directory::GetNumberOfBuckets()
+{
+    return this->single_buckets;
+}
+
+long int Directory::GetNumberOfKeys()
+{
+    return this->number_of_keys;
+}
+
+double Directory::GetMemoryOcupation()
+{
+    double size = 0;
+    //Soma o tamanho das variaveis base (4 ints e 1 long int)
+    size += sizeof(int) * 4 + sizeof(long int) * 1;
+    //Soma o n de baldes únicos na memória
+    size += this->single_buckets * sizeof(Bucket);
+
+    return size;
+}
+
+
 //Transforma um valor inteiro em binário(bitwize)
 string Directory::hash(long long int value, int number_of_btis)
 {
@@ -127,41 +151,6 @@ void Directory::Insert(long long int value)
 
         this->buckets[elementPosition] = SplitBucket(hashedValue);
 
-        /*
-   
-   
-        //Crio um novo balde
-        Bucket *newBucket = new Bucket(this->bucket_max_size);
-        this->single_buckets++;
-
-        //Insiro o novo valor nele
-        newBucket->Insert(hashedValue, this->global_depth);
-
-        //Atualizo meu contador de chaves inseridas
-        this->number_of_keys++;
-
-        //Vetor auxiliar para guardar os valores que irão ser inseridos no novo balde
-        //e posteriormente deletados do balde antigo
-        vector<string> insertedValues;
-        insertedValues.reserve(this->bucket_max_size);
-
-        //Pego todas as chaves com bits significativos iguais a da ser inserida e jogo em um novo balde
-        for (int i = 0; i < this->buckets[elementPosition]->GetUsedSize(); i++)
-        {
-            //Se os bits significativos da chave são iguais ao do comparado insiro no novo balde
-            if (this->buckets[elementPosition]->GetElement(i).substr(0, this->global_depth) == significantBits)
-            {
-                newBucket->Insert(this->buckets[elementPosition]->GetElement(i), this->global_depth);
-                insertedValues.push_back(this->buckets[elementPosition]->GetElement(i));
-            }
-        }
-        //Removo valores inseridos no balde novo do meu balde antigo
-        for (string value : insertedValues)
-            this->buckets[elementPosition]->Remove(value, this->global_depth);
-
-        //Faço meu diretório da posição atual apontar par o novo balde
-        */
-        
     }
 }
 
@@ -184,16 +173,6 @@ bool Directory::Find(long long int value)
 
     //Se o indice for invalido ou o valor não existir no balde retorno falso
     return false;
-}
-
-int Directory::GetNumberOfBuckets()
-{
-    return this->single_buckets;
-}
-
-long int Directory::GetNumberOfKeys()
-{
-    return this->number_of_keys;
 }
 
 void Directory::DuplicateDirectory()

@@ -1,9 +1,10 @@
 #include <iostream>
-#include <list>
 #include <vector>
 #include <string>
 #include <random>
 #include <functional>
+#include <iomanip> //setprecision
+#include <fstream>
 #include "./Directory.h"
 
 using namespace std;
@@ -111,7 +112,8 @@ int main()
         {
             directory->Insert(randomNums.at(i));
             progress++;
-            if (progress == 1000)
+            //Para melhor feedback da inserção quando o N é muito grande
+            if (progress == 100000)
             {
                 cout << "Na iteração  " << i << "...." << endl;
                 progress = 0;
@@ -127,7 +129,8 @@ int main()
         {
             directory->Insert(directory->binary_to_decimal(stoull(randomNums.at(i))));
             progress++;
-            if (progress == 1000)
+            //Para melhor feedback da inserção quando o N é muito grande
+            if (progress == 100000)
             {
                 cout << "Na iteração  " << i << "...." << endl;
                 progress = 0;
@@ -138,11 +141,16 @@ int main()
 
     double loadFactor = (float(directory->GetNumberOfKeys()) / (directory->GetNumberOfBuckets() * bucket_size));
 
+    //ofstream arq("saidaTestes.txt",ios::app);
+    string optionSelected = option == 1 ? "Totalmente Aleatório" : "Aleatório com mesmo padrão de bits";
+
     cout << "--------------------------------------RESULTADOS--------------------------------------" << endl;
-    cout << "Número de chaves inseridas : " << directory->GetNumberOfKeys()  << endl;
+    cout << "Geração de números :  " << optionSelected << endl;
+    cout << "Número de bits escolhido : " << number_of_bits << endl;
+    cout << "Tamanho M do balde escolhido : " <<  bucket_size << endl;
+    cout << "Número de chaves inseridas : " << directory->GetNumberOfKeys() << endl;
     cout << "Número de baldes : " << directory->GetNumberOfBuckets() << endl;
-    cout << "Fator de carga : " << loadFactor * 100 << endl;
+    cout << "Fator de carga : " << setprecision(4) << float(loadFactor * 100) << "%" << endl;
+    cout << "Ocupação da memória : " <<  double(directory->GetMemoryOcupation()/0.000125) << " Kilobytes" << endl;
     cout << "--------------------------------------------------------------------------------------" << endl;
-
-
 }
