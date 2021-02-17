@@ -16,12 +16,18 @@
 
 **Certifique-se de ter o g++ instalado no seu ambiente de desenvolvimento**
 
-1. Para dar autorização ao shellscript digite no terminal :
+
+1. Após clonar o repositório, navegue até a pasta src :
+```
+cd src
+```
+
+2. Para dar autorização ao shellscript digite no terminal :
 ```
 chmod +x compile.sh 
 ```
 
-2. Se a compilação ocorrer com sucesso, digite no terminal : 
+3. Se a compilação ocorrer com sucesso, para executar o programa digite no terminal : 
 ```
 ./main
 ```

@@ -1,6 +1,6 @@
 #ifndef DIRECTORY_H_INCLUDED
 #define DIRECTORY_H_INCLUDED
-#include "./Bucket.h"
+#include "../Bucket/Bucket.h"
 #include <iostream>
 #include <vector>
 #include <bitset>
