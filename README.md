@@ -28,7 +28,7 @@ chmod +x compile.sh
 
 # Análise
 
-## Para a análise foram feitos os seguintes testes, para instâncias com o mesmo padrão de bits, e randomizadas : 
+### Para a análise foram feitos os seguintes testes  : 
 
 Teste 1 :
 
